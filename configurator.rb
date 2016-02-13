@@ -67,13 +67,13 @@ class Configurator
     config = []
     sections.each do |section|
       section_name = section.first
-      items = build_items section
+      items = build_config_items section
       config << ConfigItem.new(section_name, items)
     end
     config
   end
 
-  def build_items section
+  def build_config_items section
     items = {}
     section[1..-1].each do |item|
       config_line = item.split("=")

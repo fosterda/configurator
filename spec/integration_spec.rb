@@ -4,9 +4,9 @@ require_relative "../configurator"
 describe Configurator do
   subject { Configurator.new("spec/test_data/config_data") }
 
-  it "gets all values for node-1" do
-    expect(subject.values_for_section("node-1")).to eq ["address = 10.0.1.2", 
-                                                        "hostname = node1.example.com", 
+  it "gets all values for a given section" do
+    expect(subject.values_for_section("node-1")).to eq ["address = 10.0.1.2",
+                                                        "hostname = node1.example.com",
                                                         "role = web server"]
   end
 
