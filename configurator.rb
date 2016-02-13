@@ -18,6 +18,13 @@ class Configurator
     nil
   end
 
+  def value_for_section_key section_name, key
+    @config_items.each do |config_item|
+      return config_item.value_of_item(key) if config_item.name == section_name
+    end
+    nil
+  end
+
   private
 
   def build_sections lines

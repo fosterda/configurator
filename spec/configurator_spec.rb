@@ -45,6 +45,8 @@ describe Configurator do
         allow(config_item_1).to receive(:name) { "node-1" }
         allow(config_item_2).to receive(:name) { "global" }
         allow(config_item_1).to receive(:all_values) { ["address = 10.0.1.2", "hostname = node1.example.com", "role = web server"] }
+        allow(config_item_1).to receive(:value_of_item).with("hostname") { "node1.example.com" }
+        allow(config_item_1).to receive(:value_of_item).with("not_here") { nil }
       end
 
       it "builds config items from config sections" do
@@ -59,6 +61,14 @@ describe Configurator do
 
       it "gets nil when invalid section name used" do
         expect(subject.values_for_section("not_here")).to eq nil
+      end
+
+      it "gets a specific value when given a section and a key" do
+        expect(subject.value_for_section_key("node-1", "hostname")).to eq "node1.example.com"
+      end
+      
+      it "gets nil when valid section name used, but invalid key" do
+        expect(subject.value_for_section_key("node-1", "not_here")).to eq nil
       end
 
     end
