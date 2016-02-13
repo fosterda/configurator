@@ -1,5 +1,4 @@
 require_relative 'config_item'
-require 'byebug'
 
 class Configurator
 
@@ -66,17 +65,23 @@ class Configurator
 
   def build_config sections
     config = []
-    sections.each do |sect|
-      items = {}
-      sect[1..-1].each do |item|
-        config_line = item.split("=")
-        key = config_line[0].strip
-        value = config_line[1].sub(/#.*/, "").strip
-        items[key] = value
-      end
-      config << ConfigItem.new(sect.first, items)
+    sections.each do |section|
+      section_name = section.first
+      items = build_items section
+      config << ConfigItem.new(section_name, items)
     end
     config
+  end
+
+  def build_items section
+    items = {}
+    section[1..-1].each do |item|
+      config_line = item.split("=")
+      key = config_line[0].strip
+      value = config_line[1].sub(/#.*/, "").strip
+      items[key] = value
+    end
+    items
   end
 
 end

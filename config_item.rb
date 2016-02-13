@@ -6,7 +6,7 @@ class ConfigItem
     @values = values
   end
 
-  def all_values 
+  def all_values
     values_as_strings = []
     @values.to_a.each do |value|
       values_as_strings << value.join(" = ")
