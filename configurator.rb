@@ -1,4 +1,5 @@
 require_relative 'config_item'
+require 'byebug'
 
 class Configurator
 
@@ -8,6 +9,13 @@ class Configurator
     @file_lines = File.read(filename).lines
     @config_sections = build_sections file_lines
     @config_items = build_config @config_sections
+  end
+
+  def values_for_section section_name
+    @config_items.each do |config_item|
+      return config_item.all_values if config_item.name == section_name
+    end
+    nil
   end
 
   private
