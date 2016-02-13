@@ -14,24 +14,6 @@ describe Configurator do
       allow(ConfigItem).to receive(:new)
     end
 
-    it "returns lines from config file" do
-      expected_lines = ["[global]\n", "  username= fred\n", "  email = fred.bloggs@example.com\n",
-                        "# Node definitions\n", "[node-1]\n", "  address = 10.0.1.2\n",
-                        "  hostname = node1.example.com\n", "  role =  web server # backup\n"]
-
-      expect(subject.file_lines).to eq expected_lines
-    end
-
-    it "builds config sections from file" do
-      expected_sections = [
-                           ["global", "  username= fred\n", "  email = fred.bloggs@example.com\n"],
-                           ["node-1", "  address = 10.0.1.2\n", "  hostname = node1.example.com\n",
-                            "  role =  web server # backup\n"]
-                          ]
-
-      expect(subject.config_sections).to eq expected_sections
-    end
-
     describe "getting config items" do
       let(:config_item_1) { double :config_item }
       let(:config_item_2) { double :config_item }

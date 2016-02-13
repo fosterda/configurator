@@ -3,12 +3,12 @@ require 'byebug'
 
 class Configurator
 
-  attr_reader :file_lines, :config_sections, :config_items
+  attr_reader :config_items
 
   def initialize filename
-    @file_lines = File.read(filename).lines
-    @config_sections = build_sections file_lines
-    @config_items = build_config @config_sections
+    file_lines = File.read(filename).lines
+    config_sections = build_sections file_lines
+    @config_items = build_config config_sections
   end
 
   def values_for_section section_name
