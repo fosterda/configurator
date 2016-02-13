@@ -1,0 +1,8 @@
+[global]
+  username= fred
+  email = fred.bloggs@example.com
+# Node definitions
+[node-1]
+  address = 10.0.1.2
+  hostname = node1.example.com
+  role =  web server # backup
