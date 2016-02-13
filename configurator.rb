@@ -1,10 +1,13 @@
+require_relative 'config_item'
+
 class Configurator
 
-  attr_reader :file_lines, :config_sections
+  attr_reader :file_lines, :config_sections, :config_items
 
   def initialize filename
     @file_lines = File.read(filename).lines
     @config_sections = build_sections file_lines
+    @config_items = build_config @config_sections
   end
 
   private
@@ -26,6 +29,10 @@ class Configurator
     all_sections.reject!(&:empty?)
   end
 
+  def line_is_section_head? line
+    !line.match(/^\[.+\]/).nil?
+  end
+
   def handle_new_section line
     section = Array.new
     section_name = get_section_name line
@@ -42,8 +49,19 @@ class Configurator
     !line.match(/^\#.*/).nil?
   end
 
-  def line_is_section_head? line
-    !line.match(/^\[.+\]/).nil?
+  def build_config sections
+    config = []
+    sections.each do |sect|
+      items = {}
+      sect[1..-1].each do |item|
+        config_line = item.split("=")
+        key = config_line[0].strip
+        value = config_line[1].sub(/#.*/, "").strip
+        items[key] = value
+      end
+      config << ConfigItem.new(sect.first, items)
+    end
+    config
   end
 
 end
