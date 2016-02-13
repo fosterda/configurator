@@ -67,7 +67,7 @@ class Configurator
     config = []
     sections.each do |section|
       section_name = section.first
-      items = build_config_items section
+      items = build_config_items section[1..-1]
       config << ConfigItem.new(section_name, items)
     end
     config
@@ -75,13 +75,18 @@ class Configurator
 
   def build_config_items section
     items = {}
-    section[1..-1].each do |item|
-      config_line = item.split("=")
-      key = config_line[0].strip
-      value = config_line[1].sub(/#.*/, "").strip
+    section.each do |item|
+      key, value = get_key_and_value_from item
       items[key] = value
     end
     items
+  end
+
+  def get_key_and_value_from item
+    config_line = item.split("=")
+    key = config_line[0].strip
+    value = config_line[1].sub(/#.*/, "").strip
+    [key, value]
   end
 
 end
