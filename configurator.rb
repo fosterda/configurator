@@ -28,7 +28,7 @@ class Configurator
 
   def build_sections lines
     all_sections = []
-    section = Array.new
+    section = []
 
     lines.each do |line|
       if line_is_section_head? line
@@ -48,7 +48,7 @@ class Configurator
   end
 
   def handle_new_section line
-    section = Array.new
+    section = []
     section_name = get_section_name line
     section << section_name
   end

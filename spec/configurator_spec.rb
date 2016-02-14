@@ -3,12 +3,12 @@ require_relative "../configurator"
 describe Configurator do
   context "config file doesn't exist" do
     it "raises Exception" do
-      expect{described_class.new("non_existent_file")}.to raise_exception(Exception)
+      expect { described_class.new("non_existent_file") }.to raise_exception(Exception)
     end
   end
 
   context "config file exists" do
-    subject { described_class.new "spec/test_data/config_data"}
+    subject { described_class.new "spec/test_data/config_data" }
 
     before do
       allow(ConfigItem).to receive(:new)
